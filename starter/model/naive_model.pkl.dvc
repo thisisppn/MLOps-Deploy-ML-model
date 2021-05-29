@@ -1,0 +1,4 @@
+outs:
+- md5: 5a0a88bf0002fc6bd377ec2fbb3119ff
+  size: 4042
+  path: naive_model.pkl
