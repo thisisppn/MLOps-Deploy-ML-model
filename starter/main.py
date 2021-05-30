@@ -45,8 +45,8 @@ async def infer(item: Item):
 
     X = pd.DataFrame.from_records([item_dict])
 
-    encoder = pickle.load(open("model/encoder.pkl", 'rb'))
-    model = pickle.load(open("model/naive_model.pkl", 'rb'))
+    encoder = pickle.load(open("starter/model/encoder.pkl", 'rb'))
+    model = pickle.load(open("starter/model/naive_model.pkl", 'rb'))
 
     cat_features = [
         "workclass",
