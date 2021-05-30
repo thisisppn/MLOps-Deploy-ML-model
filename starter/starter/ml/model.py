@@ -64,3 +64,11 @@ def inference(model, X):
     """
 
     return model.predict(X)
+
+
+def test_inference():
+    assert True
+
+
+def test_compute_model_metrics():
+    assert True
