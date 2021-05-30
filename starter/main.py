@@ -70,19 +70,20 @@ async def infer(item: Item):
     return labels[pred[0]]
 
 
-if "DYNO" in os.environ and os.path.isdir(".dvc"):
+# if "DYNO" in os.environ and os.path.isdir(".dvc"):
+if "DYNO" in os.environ:
     try:
         os.system("dvc config core.no_scm true")
-        os.system("dvc config core.hardlink_lock true")
+        # os.system("dvc config core.hardlink_lock true")
 
         os.system("dvc pull")
-        os.system("rm -r .dvc .apt/usr/lib/dvc")
+        # os.system("rm -r .dvc .apt/usr/lib/dvc")
     except Exception as e:
         print("Unexpected exception {}".format(e))
     # if os.system("dvc pull") != 0:
     #     exit("dvc pull failed")
     # os.system("rm -r .dvc .apt/usr/lib/dvc")
 
-
-if __name__ == '__main__':
-    uvicorn.run(app, host='127.0.0.1', port=8000)
+#
+# if __name__ == '__main__':
+#     uvicorn.run(app, host='127.0.0.1', port=8000)
