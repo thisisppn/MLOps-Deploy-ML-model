@@ -1,1 +1,1 @@
-web: python starter/main.py
+web: uvicorn starter.main:app
