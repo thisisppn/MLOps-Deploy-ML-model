@@ -1,8 +1,7 @@
 # Put the code for your API here.
 import pickle
-from typing import Optional
+import os
 
-import numpy as np
 import uvicorn
 import pandas as pd
 
@@ -66,9 +65,17 @@ async def infer(item: Item):
 
     pred = inference(model, X_test)
 
-    labels = ["<=50K", ">50L"]
+    labels = ["<=50K", ">50K"]
 
     return labels[pred[0]]
+
+
+if "DYNO" in os.environ and os.path.isdir(".dvc"):
+    os.system("dvc config core.no_scm true")
+    if os.system("dvc pull") != 0:
+        exit("dvc pull failed")
+    os.system("rm -r .dvc .apt/usr/lib/dvc")
+
 
 if __name__ == '__main__':
     uvicorn.run(app, host='127.0.0.1', port=8000)
