@@ -32,14 +32,18 @@ X_train, y_train, encoder, lb = process_data(
     train, categorical_features=cat_features, label="salary", training=True
 )
 
-# Process the test data with the process_data function.
+# Train model
+clf = train_model(X_train, y_train)
+
+
+# Test model with saved model and encoder
+model = pickle.load(open("starter/model/naive_model.pkl", 'rb'))
+encoder = pickle.load(open("starter/model/encoder.pkl", 'rb'))
+
 X_test, y_test, _, _ = process_data(
     test, categorical_features=cat_features, label="salary", training=False, encoder=encoder, lb=lb
 )
 
-clf = train_model(X_train, y_train)
-
-model = pickle.load(open("starter/model/naive_model.pkl", 'rb'))
 pred = inference(model, X_test)
 
 
