@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 from starter.ml.data import process_data
 
 # Add code to load in the data.
-from starter.ml.model import train_model
+from starter.ml.model import train_model, compute_model_metrics, inference
 
 data = pd.read_csv('../data/census.csv')
 
@@ -39,6 +39,12 @@ X_test, y_test, _, _ = process_data(
 # Train and save a model.
 clf = train_model(X_train, y_train)
 
-print(type(clf))
+y_pred = inference(clf, X_test)
+precision, recall, fbeta = compute_model_metrics(y_test, y_pred)
+print("Precision: {}".format(precision))
+print("Recall: {}".format(recall))
+print("Fbeta: {}".format(fbeta))
+
+
 pickle.dump(clf, open('../model/naive_model.pkl', 'wb'))
 pickle.dump(encoder, open('../model/encoder.pkl', 'wb'))
