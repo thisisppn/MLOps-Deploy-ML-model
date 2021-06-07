@@ -36,6 +36,25 @@ class Item(BaseModel):
     sex: str
     native_country: str = Field(alias='native-country')
 
+    class Config:
+        schema_extra = {
+            "example": {
+                "age": 39,
+                "fnlgt": 77516,
+                "education-num": 13,
+                "capital-gain": 2174,
+                "capital-loss": 0,
+                "hours-per-week": 40,
+                "workclass": "State-gov",
+                "education": "Bachelors",
+                "marital-status": "Never-married",
+                "occupation": "Adm-clerical",
+                "relationship": "Not-in-family",
+                "race": "White",
+                "sex": "Male",
+                "native-country": "United-States"
+            }
+        }
 
 @app.post("/infer/")
 async def infer(item: Item):
