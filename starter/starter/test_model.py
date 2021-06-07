@@ -35,6 +35,8 @@ X_train, y_train, encoder, lb = process_data(
 # Train model
 clf = train_model(X_train, y_train)
 
+# NOTE Unlike what was suggested in the previous review, I am actually testing the pre trained/saved model itself
+# by loading it in the following lines. I am not testing the newly trained model.
 
 # Test model with saved model and encoder
 model = pickle.load(open("starter/model/naive_model.pkl", 'rb'))

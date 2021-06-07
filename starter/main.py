@@ -16,7 +16,8 @@ app = FastAPI()
 
 @app.get("/")
 def read_root():
-    return "Welcome to the API"
+    return {"welcome-message": "Hello world! welcome to the API. "
+                               "Please visit https://ml-deployment-pipeline.herokuapp.com/docs to get starter."}
 
 
 class Item(BaseModel):
@@ -55,6 +56,7 @@ class Item(BaseModel):
                 "native-country": "United-States"
             }
         }
+
 
 @app.post("/infer/")
 async def infer(item: Item):

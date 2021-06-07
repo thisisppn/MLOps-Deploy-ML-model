@@ -3,6 +3,7 @@ import pickle
 
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from prettytable import PrettyTable
 
 # Add the necessary imports for the starter code.
 from ml.data import process_data
@@ -42,10 +43,39 @@ clf = train_model(X_train, y_train)
 y_pred = inference(clf, X_test)
 precision, recall, fbeta = compute_model_metrics(y_test, y_pred)
 
-with open("slice_outpt.txt", "w") as file:
-    file.write("Precision " + str(precision) + '\n')
-    file.write("Recall " + str(recall) + '\n')
-    file.write("F-beta score " + str(fbeta))
-
 pickle.dump(clf, open('../model/naive_model.pkl', 'wb'))
 pickle.dump(encoder, open('../model/encoder.pkl', 'wb'))
+
+print("Overall metrics: ")
+print("""Precision: {}
+   Recall: {}
+    fbeta: {}
+    """.format(precision, recall, fbeta))
+
+
+# NOTE: Solution for Rubric #5.
+# Fix a feature, and output metrics for each of it's unique value.
+
+fix_variable = "education"
+
+x = PrettyTable()
+x.title = 'Metrics with fixed categorical variable: "{}"'.format(fix_variable)
+x.field_names = ['Value', 'Precision', 'Recall', 'F-Beta']
+
+for cat_value in data[fix_variable].unique():
+    sub_data = data[data[fix_variable] == cat_value]
+
+    # Process the test data with the process_data function.
+    X_test_subset, y_test_subset, encoder, lb = process_data(
+        sub_data, categorical_features=cat_features, label="salary", training=False, encoder=encoder, lb=lb
+    )
+
+    y_pred_subset = clf.predict(X_test_subset)
+    precision, recall, fbeta = compute_model_metrics(y_test_subset, y_pred_subset)
+
+    x.add_row([cat_value, precision, recall, fbeta])
+
+print(x)
+
+with open('slice_output.txt', 'w') as f:
+    f.write(str(x))
